@@ -1,0 +1,99 @@
+package dem;
+
+import java.util.Scanner;
+
+public class dem2 
+{
+
+	public static void main(String[] args)
+	{
+		Scanner myObj = new Scanner(System.in);
+		System.out.println("Enter query");
+		
+		
+		String str = myObj.nextLine();
+		String[] checks = str.split(" ");
+		String[] cond = {"Select","from","group","order","desc","asc","where","having"};
+		String[] values= {"name","age","table","*","ProductCode","ProductID","ProductTable"};
+		String str1 = null;
+		
+		int checklen = checks.length;
+		int condlen = cond.length;
+		int valueslen=values.length;
+
+		
+		
+		for (int i = 0; i < checklen; i++) 
+		{
+			int flag =0;
+			for(int j=0;j < condlen;j++)
+			{
+				if(checks[i].equalsIgnoreCase(cond[j]))
+				{
+					flag=1;
+				}
+				
+								
+			}
+			
+			
+			if(flag==1) 
+			{
+				if (checks[i].equalsIgnoreCase("Group") || checks[i].equalsIgnoreCase("Order")) 
+				{
+					System.out.println(checks[i]+" "+checks[i+1]);
+					i++;
+				}
+				
+				else
+				{
+					System.out.println(checks[i]);
+				}
+				
+			}
+			else 
+			{
+				int valsflag=0;
+				for(int k=0;k<valueslen;k++)
+				{
+					if(checks[i].equalsIgnoreCase(values[k])) 
+					{
+						valsflag=1;		
+					}
+				}
+				if(valsflag==1) 
+				{
+					if(i<checklen-1)
+					{
+						if(checks[i+1].equalsIgnoreCase("=")||checks[i+1].equalsIgnoreCase(","))
+						{
+							System.out.println("\t"+checks[i]+" "+checks[i+1]+" "+checks[i+2]);
+							i=i+2;
+						}
+						else if( checks[i+1].equalsIgnoreCase("ASC") ||  checks[i+1].equalsIgnoreCase("DESC") )
+						{
+							System.out.println("\t"+checks[i]+" "+checks[i+1]);
+							i =i+1;
+						}
+						else 
+						{
+							System.out.println("\t" + checks[i]);
+						}
+
+					}
+					else 
+					{
+						System.out.println("\t" + checks[i]);
+					}
+				}
+				else
+				{
+					System.out.println("\tthe value specified is not present");
+				}
+			}
+				
+
+		}
+
+	}
+}
