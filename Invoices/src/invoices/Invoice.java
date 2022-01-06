@@ -71,7 +71,7 @@ public class Invoice extends HttpServlet {
 		PrintWriter print = response.getWriter();
 		String req = request.getReader().lines().collect(Collectors.joining());
 		List<Items> input_list = new ArrayList<Items>();
-		List<Items> item_list = new ArrayList<Items>();
+		//List<Items> item_list = new ArrayList<Items>();
 		Output op = new Output();
 		JSONObject obj = new JSONObject();
 		boolean isitempresent = false;
@@ -79,10 +79,13 @@ public class Invoice extends HttpServlet {
 
 		try {
 			JSONObject jo = new JSONObject(req);
+			
+			
 			String cell = jo.getString("cell");
-			String name = jo.getString("name");
-			String lname = jo.getString("lname");
-			JSONArray data = jo.getJSONArray("data");
+			String name = jo.optString("name");
+			//String name = jo.getString("name");
+			String lname = jo.optString("lname");
+			JSONArray data = jo.optJSONArray("data");
 			for (int i = 0; i < data.length(); i++) 
 			{
 				JSONObject objects = data.getJSONObject(i);
@@ -105,6 +108,8 @@ public class Invoice extends HttpServlet {
 			for (Contactperson person : details) {
 				if (cell.equalsIgnoreCase(person.getCell())) {
 					ispersonexist = true;
+					name=person.getName();
+					lname=person.getLname();
 
 				}
 			}
@@ -119,9 +124,11 @@ public class Invoice extends HttpServlet {
 						{
 
 							total = total + Integer.parseInt(it.getQuantity()) * its.getPrice();
-
-							its.setQuantity(it.getQuantity());
-							item_list.add(its);
+							
+							it.setName(its.getName());
+							it.setPrice(its.getPrice());
+							//its.setQuantity(it.getQuantity());
+							//input_list.add(it);
 							isitempresent = true;
 
 						}
@@ -139,7 +146,7 @@ public class Invoice extends HttpServlet {
 					op.setCell(cell);
 					op.setLname(lname);
 					op.setName(name);
-					op.setItems(item_list);
+					op.setItems(input_list);
 					op.setTotal(total);
 					Gson gs = new Gson();
 					String json = gs.toJson(op);
@@ -158,8 +165,8 @@ public class Invoice extends HttpServlet {
 				person.setName(name);
 				person.setLname(lname);
 				details.add(person);
-				System.out.println(details.toString());
-				System.out.println("contact person added try again");
+				//System.out.println(details.toString());
+				//System.out.println("contact person added try again");
 
 				Gson gs = new Gson();
 				String nlist = gs.toJson(details);
@@ -174,5 +181,7 @@ public class Invoice extends HttpServlet {
 		}
 
 	}
+
+}
 
 }
