@@ -34,6 +34,7 @@ public class Invoice extends HttpServlet {
 	String food;
 	int amount;
 	int total;
+	int subtotal;
 
 	List<Contactperson> details = new ArrayList<Contactperson>();
 	List<Items> available_items_list = new ArrayList<Items>();
@@ -122,9 +123,12 @@ public class Invoice extends HttpServlet {
 					{
 						if (it.getItemid().equalsIgnoreCase(its.getItemid())) 
 						{
+							subtotal= Integer.parseInt(it.getQuantity())*its.getPrice();
+						
+							total=total+subtotal;
 
-							total = total + Integer.parseInt(it.getQuantity()) * its.getPrice();
-							
+							//total = total + Integer.parseInt(it.getQuantity()) * its.getPrice();
+							it.setSubtotal(subtotal);
 							it.setName(its.getName());
 							it.setPrice(its.getPrice());
 							//its.setQuantity(it.getQuantity());
