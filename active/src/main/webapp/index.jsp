@@ -9,7 +9,7 @@
 <body>
 <h2>Item Update</h2>
 
-		<form action="/active/Hello" method="GET">
+		<form action="/active/Hello" method="POST">
 			<input type="submit" value="Check">
 		</form> 
 
