@@ -57,7 +57,7 @@ public class Hello extends HttpServlet {
 			http.setDoOutput(true);
 			http.setRequestProperty("Accept","application/json");
 
-			OutputStream os1 = http.getOutputStream();
+			//OutputStream os1 = http.getOutputStream();
 
 			BufferedReader br1 = new BufferedReader(new InputStreamReader(http.getInputStream(), "utf-8"));
 			String responseLine1 = null;
@@ -94,10 +94,10 @@ public class Hello extends HttpServlet {
 			JSONObject ob = new JSONObject(sb.toString());
 			JSONArray arr =ob.getJSONArray("items");
 
-			int len=arr.length();
+			int len_of_item=arr.length();
 			int flag=0;
 			int flag2=0;
-			for(int i=0;i<len;i++) 
+			for(int i=0;i<len_of_item;i++) 
 			{
 				JSONObject name=arr.getJSONObject(i);
 				if(name.has("stock_on_hand")&&name.getDouble("stock_on_hand")<=0)	
@@ -210,10 +210,6 @@ public class Hello extends HttpServlet {
 
 				}
 			}
-
-
-
-
 
 		}
 		
